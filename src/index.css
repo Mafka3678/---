@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-surface: #faf8fe;
+  --color-surface-dim: #dad9df;
+  --color-surface-bright: #faf8fe;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f3f8;
+  --color-surface-container: #eeedf3;
+  --color-surface-container-high: #e9e7ed;
+  --color-surface-container-highest: #e3e2e7;
+  
+  --color-on-surface: #1a1b1f;
+  --color-on-surface-variant: #46464a;
+  
+  --color-primary: #1d1d1f;
+  --color-on-primary: #ffffff;
+  
+  --color-secondary: #5d5e60;
+  --color-on-secondary: #ffffff;
+  
+  --radius-xl: 1.5rem;
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased;
+  }
+}
+
+.signature-shadow {
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at center, #ffffff 0%, #faf8fe 100%);
+}
