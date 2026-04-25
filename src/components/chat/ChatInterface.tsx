@@ -50,22 +50,14 @@ const ChatInterface = ({ embedded = false }: { embedded?: boolean }) => {
     {
       id: 1,
       role: 'bot',
-      content: 'Привет! Я ваш ассистент Чат Ботаник. Я проанализировал текущие показатели вашего домена. Хотели бы вы увидеть анализ пробелов в ключевых словах или наш прогноз стратегии на четвертый квартал?',
-      time: '10:24',
+      content: 'Здравствуйте! Я ИИ-консультант агентства "Чат Ботаник". Готов рассказать вам, как мы помогаем бизнесу расти через эффективную лидогенерацию.',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
     {
       id: 2,
-      role: 'user',
-      content: 'Давайте начнем со стратегии на четвертый квартал. Меня особенно интересует, как мы можем использовать новые креативные активы для увеличения органического охвата.',
-      time: '10:26',
-      status: 'read'
-    },
-    {
-      id: 3,
       role: 'bot',
-      content: 'Понял вас. Вот краткий обзор нашей дорожной карты на четвертый квартал с учетом нового визуального языка.',
-      time: '10:27',
-      hasData: true,
+      content: 'У нас есть три главных фокуса: максимальная конверсия посадочных страниц, умная защита от ботных заявок и системное снижение стоимости привлечения клиента. О чем рассказать подробнее?',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
   ]);
 
@@ -82,7 +74,7 @@ const ChatInterface = ({ embedded = false }: { embedded?: boolean }) => {
     scrollToBottom();
   }, [messages, isBotTyping]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!inputValue.trim()) return;
 
     const userMessageId = Date.now();
@@ -97,7 +89,7 @@ const ChatInterface = ({ embedded = false }: { embedded?: boolean }) => {
     setMessages(prev => [...prev, newMessage]);
     setInputValue('');
 
-    // Simulate message pipeline
+    // Simulate message pipeline for status updates
     setTimeout(() => {
       setMessages(prev => prev.map(m => m.id === userMessageId ? { ...m, status: 'delivered' } : m));
     }, 1000);
@@ -107,17 +99,42 @@ const ChatInterface = ({ embedded = false }: { embedded?: boolean }) => {
       setIsBotTyping(true);
     }, 2000);
 
-    // Simulate bot response
-    setTimeout(() => {
+    try {
+      // Call backend API instead of direct SDK
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: inputValue }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch from server');
+      }
+
+      const data = await response.json();
+      const text = data.text;
+
       setIsBotTyping(false);
       const botMessage: Message = {
         id: Date.now() + 1,
         role: 'bot',
-        content: `Интересный вопрос! Мы можем внедрить ${inputValue.toLowerCase().includes('стратег') ? 'стратегические' : 'новые'} решения в контент-план. Для креативов мы подготовили сетку A/B тестирования.`,
+        content: text,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages(prev => [...prev, botMessage]);
-    }, 4500);
+    } catch (error) {
+      console.error("Gemini Error:", error);
+      setIsBotTyping(false);
+      const errorMessage: Message = {
+        id: Date.now() + 1,
+        role: 'bot',
+        content: "Извините, произошла техническая ошибка. Пожалуйста, попробуйте написать позже или свяжитесь с нами напрямую.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   const clearChat = () => {

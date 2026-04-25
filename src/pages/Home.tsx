@@ -140,9 +140,9 @@ const Home = () => {
           >
             <Zap className="w-8 h-8 text-primary" />
           </motion.div>
-          <h2 className="text-5xl font-bold text-primary mb-6 tracking-tight">Получите мгновенную стратегию</h2>
+          <h2 className="text-5xl font-bold text-primary mb-6 tracking-tight">Попробуйте наш демо-чат</h2>
           <p className="text-xl text-secondary max-w-2xl mx-auto">
-            Наш ИИ-ассистент проанализирует вашу нишу в реальном времени. Просто опишите свои цели в чате ниже.
+            Наш ИИ-бот расскажет, как мы достигаем высокой конверсии, защищаем от фродовых лидов и снижаем стоимость привлечения клиента. Задайте любой вопрос!
           </p>
         </div>
         <ChatInterface embedded={true} />
