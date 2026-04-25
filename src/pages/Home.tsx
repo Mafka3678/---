@@ -1,6 +1,7 @@
-import { ArrowRight, TrendingUp } from 'lucide-react';
+import { ArrowRight, TrendingUp, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import ChatInterface from '../components/chat/ChatInterface';
 
 const Home = () => {
   return (
@@ -128,18 +129,35 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 px-8 bg-white">
-        <div className="max-w-[800px] mx-auto text-center">
-          <h2 className="text-6xl font-bold text-primary mb-8 leading-tight">Готовы увидеть результат?</h2>
-          <p className="text-xl text-secondary mb-12">Хватит гадать. Начните расти. Давайте построим цифровое будущее вашего бренда с точностью, основанной на данных.</p>
-          <button className="bg-primary text-on-primary px-12 py-6 rounded-full font-bold hover:scale-105 transition-transform shadow-xl active:scale-100">
-            Запросить бесплатный аудит
-          </button>
+      {/* Integrated Chat Section */}
+      <section className="py-32 px-8 bg-white overflow-hidden relative">
+        <div className="max-w-[1440px] mx-auto text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="w-16 h-16 bg-surface-container rounded-3xl flex items-center justify-center mx-auto mb-8"
+          >
+            <Zap className="w-8 h-8 text-primary" />
+          </motion.div>
+          <h2 className="text-5xl font-bold text-primary mb-6 tracking-tight">Получите мгновенную стратегию</h2>
+          <p className="text-xl text-secondary max-w-2xl mx-auto">
+            Наш ИИ-ассистент проанализирует вашу нишу в реальном времени. Просто опишите свои цели в чате ниже.
+          </p>
         </div>
+        <ChatInterface embedded={true} />
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-32 px-8 bg-surface-container text-center">
+        <h2 className="text-4xl font-bold text-primary mb-8 tracking-tight">Готовы к масштабированию?</h2>
+        <button className="bg-primary text-on-primary px-12 py-5 rounded-xl font-bold transition-transform hover:scale-[1.02] active:scale-95 shadow-xl shadow-black/5">
+          Запросить бесплатный аудит
+        </button>
       </section>
     </div>
   );
 };
 
 export default Home;
+
